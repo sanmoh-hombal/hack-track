@@ -1,0 +1,33 @@
+[project]
+name = "hack-track"
+version = "0.1.0"
+description = "DSA Interview Preparation Powerhouse"
+authors = [
+    {name = "Sanmoh Hombal",email = "sanmoh.hombal@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+
+dependencies = [
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+pytest = "^8.3.5"
+isort = "^6.0.1"
+mypy = "^1.15.0"
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
