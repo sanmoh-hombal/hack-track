@@ -97,3 +97,58 @@ function call to `print_num(1)` returns.
 > the third call has `num = 3`. Let's say that we were to do `num += 1` in the `print_num(3)` call. Then `num` 
 > becomes `4`, but only in the `print_num(3)` call. The other 2 "versions" of `num` are unaffected because they are 
 > in different scopes.
+
+### Breaking problems down
+
+This printing example is pretty pointless - it's easier to use a for loop if you just want to print numbers. Where 
+recursion shines is when you use it to break down a problem into "sub-problems", whose solutions can then be combined 
+to solve the original problem.
+
+Let's look at the Fibonacci numbers. The fibonaci numbers are a sequence of numbers starting with `0, 1`. Then, each 
+number is defined as the sum of the previous two numbers. The first few Fibonacci numbers are `0, 1, 1, 2, 3, 5, 8`. 
+More formally we have
+```text
+Fn = Fn-1 + Fn-2
+```
+
+This is called a **recurrence relation** - it's an equation that connects the terms together.
+
+Let's use pseudocode to write a function `F(n)` that returns the nth fibonacci number (0 indexed). Don't forget we 
+need base cases with any recursive function. In this case the base cases are explicitly defined:
+`F(0) = 0` and `F(1) = 1`
+```python
+def F(n):
+    if n <= 1:
+        return n
+
+    one_back = F(n - 1)
+    two_back = F(n - 2)
+    return one_back + two_back
+```
+
+Let's say that we wanted to find `F(3)`. Upon calling `F(3)`, we would see the following flow, with each indentation 
+level representing a function call's scope:
+```text
+one_back = F(2)
+    one_back = F(1)
+        F(1) = 1
+    two_back = F(0)
+        F(0) = 0
+    F(2) = one_back + two_back = 1
+two_back = F(1)
+    F(1) = 1
+F(3) = one_back + two_back = 2
+```
+
+As you can see, we took the original problem `F(3)`, and broke it down into two smaller sub-problems - `F(2)` and `F
+(1)`. By combining the recurrence relation and base cases, we can solve the sub-problems and use those solutions to 
+solve the original problem.
+
+This is the most common use of recursion - you have your recursive function **return the answer to the problem you're 
+trying to solve for a given input**. In this example, the problem we're trying to solve for a given input is "With 
+is the nth Fibonacci number?" As such, we designed our function to return a Fibonacci number, according to the input 
+_n_. By determining the base cases and a recurrence relation, we can easily implement the function.
+
+By following this idea, solving the sub-problems is easy - if we wanted the 100th Fibonacci number, we know by 
+definition that it is the sum of the 99th and 98th Fibonacci number. On the function call to `F(100)`, we know that 
+calling `F(99)` and `F(98)` will give us the answer.
